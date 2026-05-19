@@ -1,15 +1,9 @@
-
-# 🏆 Team Recognition - Código Completo y Funcional
-
-Aquí tienes el código completo corregido y mejorado:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 Team Recognition - Best Helper</title>
+    <title>🏆 Team Recognition - Best Helper Analytics</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +20,7 @@ Aquí tienes el código completo corregido y mejorado:
         }
 
         .container {
-            max-width: 950px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -49,53 +43,6 @@ Aquí tienes el código completo corregido y mejorado:
             font-size: 1.1em;
         }
 
-        /* TABS */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            padding: 12px 28px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1em;
-            transition: all 0.3s;
-        }
-
-        .tab-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(45deg, #f39c12, #e74c3c);
-            border-color: transparent;
-            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.4);
-        }
-
-        /* SECCIONES */
-        .section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .card {
             background: rgba(255, 255, 255, 0.06);
             border-radius: 20px;
@@ -108,9 +55,25 @@ Aquí tienes el código completo corregido y mejorado:
         .card h2 {
             margin-bottom: 25px;
             font-size: 1.5em;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* FORMULARIOS */
+        /* GRID LAYOUT FOR INPUTS */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 850px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -151,11 +114,10 @@ Aquí tienes el código completo corregido y mejorado:
         }
 
         .form-group textarea {
-            min-height: 70px;
+            min-height: 280px;
             resize: vertical;
         }
 
-        /* BOTONES */
         .btn-primary {
             background: linear-gradient(45deg, #f39c12, #e74c3c);
             color: #fff;
@@ -168,6 +130,8 @@ Aquí tienes el código completo corregido y mejorado:
             transition: all 0.3s;
             display: block;
             width: 100%;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.2);
         }
 
         .btn-primary:hover {
@@ -175,161 +139,29 @@ Aquí tienes el código completo corregido y mejorado:
             box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
         }
 
-        .btn-secondary {
-            background: linear-gradient(45deg, #9b59b6, #8e44ad);
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95em;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
-        }
-
-        .btn-danger {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
-        }
-
-        /* SETUP - MIEMBROS */
-        .add-member-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .add-member-row input {
-            flex: 1;
-            padding: 14px 18px;
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            font-size: 1em;
-        }
-
-        .add-member-row input:focus {
-            outline: none;
-            border-color: #9b59b6;
-            box-shadow: 0 0 15px rgba(155, 89, 182, 0.3);
-        }
-
-        .members-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .member-chip {
-            background: linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(142, 68, 173, 0.2));
-            border: 1px solid rgba(155, 89, 182, 0.5);
-            padding: 10px 18px;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .member-chip:hover {
-            background: rgba(155, 89, 182, 0.4);
-            transform: scale(1.05);
-        }
-
-        .member-chip .remove {
-            cursor: pointer;
-            color: #e74c3c;
-            font-weight: bold;
-            font-size: 1.2em;
-            width: 22px;
-            height: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(231, 76, 60, 0.2);
-            transition: all 0.3s;
-        }
-
-        .member-chip .remove:hover {
-            background: rgba(231, 76, 60, 0.5);
-        }
-
-        /* RECOGNITION SLOTS */
-        .recognition-slot {
-            background: rgba(255, 255, 255, 0.04);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .recognition-slot:hover {
-            border-color: rgba(243, 156, 18, 0.3);
-        }
-
-        .slot-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .slot-number {
-            background: linear-gradient(45deg, #f39c12, #e74c3c);
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1em;
-        }
-
-        .slot-title {
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
         /* RESULTADOS */
+        .results-section {
+            display: none;
+            margin-top: 30px;
+        }
+
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
         }
 
         .stat-box {
             background: rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stat-box .number {
-            font-size: 2.8em;
+            font-size: 3em;
             font-weight: 800;
             background: linear-gradient(45deg, #f1c40f, #e74c3c);
             -webkit-background-clip: text;
@@ -340,161 +172,72 @@ Aquí tienes el código completo corregido y mejorado:
         .stat-box .label {
             color: #95a5a6;
             margin-top: 5px;
-            font-size: 0.9em;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* PODIUM */
-        .podium {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 15px;
-            margin: 30px 0;
-            min-height: 280px;
+        .output-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
         }
 
-        .podium-place {
-            text-align: center;
-            border-radius: 16px;
-            padding: 20px 15px;
-            min-width: 140px;
-            transition: all 0.3s;
-        }
-
-        .podium-place:hover {
-            transform: translateY(-5px);
-        }
-
-        .podium-1 {
-            background: linear-gradient(180deg, rgba(241, 196, 15, 0.3), rgba(241, 196, 15, 0.1));
-            border: 2px solid rgba(241, 196, 15, 0.5);
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .podium-2 {
-            background: linear-gradient(180deg, rgba(189, 195, 199, 0.3), rgba(189, 195, 199, 0.1));
-            border: 2px solid rgba(189, 195, 199, 0.5);
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .podium-3 {
-            background: linear-gradient(180deg, rgba(205, 127, 50, 0.3), rgba(205, 127, 50, 0.1));
-            border: 2px solid rgba(205, 127, 50, 0.5);
-            min-height: 160px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .podium-medal {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .podium-name {
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .podium-votes {
-            font-size: 0.9em;
-            color: #bdc3c7;
-        }
-
-        /* DETAIL CARDS */
-        .result-card {
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 5px solid #f39c12;
-            transition: all 0.3s;
-        }
-
-        .result-card:nth-child(1) { border-left-color: #f1c40f; }
-        .result-card:nth-child(2) { border-left-color: #bdc3c7; }
-        .result-card:nth-child(3) { border-left-color: #cd7f32; }
-
-        .result-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
-        }
-
-        .result-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .result-card-name {
-            font-size: 1.3em;
-            font-weight: 700;
-        }
-
-        .result-card-badge {
-            background: linear-gradient(45deg, #f39c12, #e74c3c);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9em;
-        }
-
-        .progress-bar {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 5px;
-            background: linear-gradient(90deg, #f39c12, #2ecc71);
-            transition: width 1.5s ease;
-        }
-
-        .comments-section {
-            margin-top: 15px;
+        @media (max-width: 850px) {
+            .output-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .comment-item {
             background: rgba(255, 255, 255, 0.05);
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin: 8px 0;
-            border-left: 3px solid rgba(243, 156, 18, 0.5);
+            padding: 16px;
+            border-radius: 12px;
+            margin: 12px 0;
+            border-left: 4px solid #f39c12;
+            line-height: 1.5;
         }
 
-        .comment-text {
-            color: #ecf0f1;
-            font-size: 0.95em;
-            margin-bottom: 5px;
-        }
-
-        .comment-author {
-            color: #7f8c8d;
-            font-size: 0.8em;
-            font-style: italic;
-        }
-
-        .no-results {
+        .image-placeholder {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            padding: 40px;
             text-align: center;
-            padding: 60px 20px;
-            color: #7f8c8d;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .no-results .icon {
-            font-size: 4em;
-            margin-bottom: 15px;
+        .image-placeholder h3 {
+            color: #bdc3c7;
+            margin-bottom: 10px;
+        }
+
+        .image-placeholder p {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            max-width: 80%;
+        }
+
+        .generated-image {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .prompt-preview {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(243, 156, 18, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #e67e22;
+            font-style: italic;
         }
 
         /* NOTIFICATION */
@@ -515,62 +258,272 @@ Aquí tienes el código completo corregido y mejorado:
             transform: translateX(0);
         }
 
-        .notification.success {
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
-        }
+        .notification.success { background: linear-gradient(45deg, #2ecc71, #27ae60); }
+        .notification.error { background: linear-gradient(45deg, #e74c3c, #c0392b); }
+        .notification.info { background: linear-gradient(45deg, #3498db, #2980b9); }
 
-        .notification.error {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        .security-warning {
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid rgba(231, 76, 60, 0.4);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+            color: #f19066;
+            line-height: 1.4;
         }
-
-        .notification.info {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-        }
-
-        /* CONFETTI */
-        .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9998;
-            overflow: hidden;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            top: -10px;
-            animation: confettiFall 3s linear forwards;
-        }
-
-        @keyframes confettiFall {
-            to {
-                top: 100vh;
-                transform: rotate(720deg);
-            }
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.8em; }
-            .add-member-row { flex-direction: column; }
-            .podium { flex-direction: column; align-items: center; }
-            .podium-place { min-width: 90%; min-height: auto !important; }
-            .stats-row { grid-template-columns: 1fr 1fr; }
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-        ::-webkit-scrollbar-thumb { background: rgba(243,156,18,0.5); border-radius: 4px; }
     </style>
 </head>
 <body>
+
+    <div id="notification" class="notification"></div>
+
     <div class="container">
         <div class="header">
-            <h1>🏆 Best Helper Recognition</h1>
-            <p>Reconoce hasta 3 compañeros que te han ayudado. ¡Celebremos al
+            <h1>🏆 Team Recognition Analytics</h1>
+            <p>Procesamiento analítico de texto y generación de arquetipos visuales sin servidores.</p>
+        </div>
+
+        <div class="card">
+            <h2>⚙️ Consola de Configuración y Carga de Datos</h2>
+            <div class="workspace-grid">
+                
+                <div class="form-group">
+                    <label for="textoCrudo">📝 Texto Crudo a Analizar (Comentarios, Actas, Transcripciones):</label>
+                    <textarea id="textoCrudo" placeholder="Pega aquí todo el volumen de texto acumulado... Ejemplo: Juan Pérez hizo un gran despliegue técnico. Es un líder nato y salvó la entrega de hoy..."></textarea>
+                </div>
+
+                <div>
+                    <div class="form-group">
+                        <label for="usuarioObjetivo">👤 Usuario Objetivo (Nombre exacto):</label>
+                        <input type="text" id="usuarioObjetivo" placeholder="Ej: Juan Pérez">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipoVisualizacion">🎨 Tipo de Arquetipo Visual:</label>
+                        <select id="tipoVisualizacion">
+                            <option value="Arquetipo de Personaje Épico">Arquetipo de Personaje Épico</option>
+                            <option value="Resumen de Sentimiento Visual (Abstracto)">Resumen de Sentimiento Visual (Abstracto)</option>
+                            <option value="Caricatura Conceptual">Caricatura Conceptual</option>
+                            <option value="Holograma Corporativo Futurista">Holograma Corporativo Futurista</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apiKeyOpenAI">🔑 OpenAI API Key:</label>
+                        <input type="password" id="apiKeyOpenAI" placeholder="sk-...">
+                        <div class="security-warning">
+                            <strong>⚠️ Seguridad GitHub Pages:</strong> Tu API Key se procesa localmente en tu navegador. NUNCA la guardes directamente en el código fuente de tu repositorio público de GitHub.
+                        </div>
+                    </div>
+
+                    <button id="btnAnalizar" class="btn-primary">🚀 Ejecutar Análisis Lógico</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE RESULTADOS -->
+        <div id="resultsSection" class="results-section card">
+            <h2>📊 Reporte Consolidado de Reconocimiento</h2>
+            
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div id="statVotos" class="number">0</div>
+                    <div class="label">Menciones Totales (Votos)</div>
+                </div>
+                <div class="stat-box">
+                    <div id="statPositivos" class="number" style="background: linear-gradient(45deg, #2ecc71, #27ae60); -webkit-background-clip: text;">0</div>
+                    <div class="label">Comentarios Positivos</div>
+                </div>
+                <div class="stat-box">
+                    <div id="statTono" class="number" style="font-size: 1.8em; padding-top: 15px; background: linear-gradient(45deg, #3498db, #9b59b6); -webkit-background-clip: text;">Neutral</div>
+                    <div class="label">Tono General NLP</div>
+                </div>
+            </div>
+
+            <div class="output-grid">
+                <div>
+                    <h3>🗣️ Extractos y Comentarios Vinculados</h3>
+                    <div id="commentsContainer"></div>
+                </div>
+
+                <div>
+                    <h3>🖼️ Renderización del Arquetipo Visual</h3>
+                    <div id="imageWrapper">
+                        <div class="image-placeholder">
+                            <h3>Lienzo Listo</h3>
+                            <p>Ingresa tu OpenAI API Key para invocar a DALL-E 3 basándonos en los sentimientos del texto analizado.</p>
+                        </div>
+                    </div>
+                    <div id="promptPreviewContainer" style="display:none;">
+                        <h4 style="margin-top: 15px; color: #bdc3c7;">Prompt Maestro Estructurado por la IA:</h4>
+                        <div id="promptPreview" class="prompt-preview"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Diccionario léxico básico en español para análisis de sentimientos ligero en el cliente
+        const palabrasPositivas = ['ayuda', 'excelente', 'bueno', 'gracias', 'mejor', 'gran', 'apoyo', 'liderazgo', 'crack', 'felicitaciones', 'buen', 'eficiente', 'logro', 'compromiso', 'salvó', 'solucionó', 'atento', 'genio'];
+        const palabrasNegativas = ['malo', 'error', 'problema', 'fallo', 'tarde', 'incumplió', 'mal', 'queja', 'deficiencia', 'retraso', 'ausente', 'discusión', 'conflicto', 'lento'];
+
+        function showNotification(text, type = 'success') {
+            const notif = document.getElementById('notification');
+            notif.innerText = text;
+            notif.className = `notification show ${type}`;
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 4000);
+        }
+
+        document.getElementById('btnAnalizar').addEventListener('click', async () => {
+            const texto = document.getElementById('textoCrudo').value.trim();
+            const objetivo = document.getElementById('usuarioObjetivo').value.trim();
+            const tipoVisualizacion = document.getElementById('tipoVisualizacion').value;
+            const apiKey = document.getElementById('apiKeyOpenAI').value.trim();
+
+            if (!texto || !objetivo) {
+                showNotification('⚠️ Por favor rellena el texto crudo y el usuario objetivo.', 'error');
+                return;
+            }
+
+            // Separación analítica en lotes de oraciones
+            const oraciones = texto.split(/[.!?\n]/);
+            const extractos = [];
+            let conteoVotos = 0;
+            let conteoPositivos = 0;
+            let conteoNegativos = 0;
+            let scoreTotal = 0;
+
+            const regexObjetivo = new RegExp(`\\b${objetivo}\\b`, 'i');
+
+            oraciones.forEach(oracion => {
+                const item = oracion.strip ? oracion.strip() : oracion.trim();
+                if (item && regexObjetivo.test(item)) {
+                    conteoVotos++;
+                    extractos.push(item);
+
+                    // Análisis léxico de sentimiento (NLP determinista en JS)
+                    let scoreOracion = 0;
+                    const palabras = item.toLowerCase().split(/\\W+/);
+                    
+                    palabras.forEach(pal => {
+                        if (palabrasPositivas.includes(pal)) scoreOracion += 1;
+                        if (palabrasNegativas.includes(pal)) scoreOracion -= 1;
+                    });
+
+                    scoreTotal += scoreOracion;
+                    if (scoreOracion > 0) conteoPositivos++;
+                    if (scoreOracion < 0) conteoNegativos++;
+                }
+            });
+
+            if (conteoVotos === 0) {
+                showNotification(`❌ No se encontraron menciones para "${objetivo}".`, 'error');
+                document.getElementById('resultsSection').style.display = 'none';
+                return;
+            }
+
+            // Determinación del Tono General
+            let tonoGeneral = "Neutral";
+            if (scoreTotal > 1) tonoGeneral = "Positivo y Alentador";
+            if (scoreTotal < -1) tonoGeneral = "Crítico o Riguroso";
+
+            // Renderizar Datos Cuantitativos
+            document.getElementById('statVotos').innerText = conteoVotos;
+            document.getElementById('statPositivos').innerText = conteoPositivos;
+            document.getElementById('statTono').innerText = tonoGeneral;
+
+            // Renderizar Extractos de comentarios
+            const commentsContainer = document.getElementById('commentsContainer');
+            commentsContainer.innerHTML = '';
+            extractos.slice(0, 6).forEach(ext => {
+                const div = document.createElement('div');
+                div.className = 'comment-item';
+                div.innerText = `"${ext}"`;
+                commentsContainer.appendChild(div);
+            });
+            if (extractos.length > 6) {
+                const extra = document.createElement('p');
+                extra.style.color = '#95a5a6';
+                extra.style.fontSize = '0.9em';
+                extra.innerText = `... y ${extractos.length - 6} menciones más en el lote de datos.`;
+                commentsContainer.appendChild(extra);
+            }
+
+            // Construir el Prompt Maestro Visual
+            let promptVisual = `Un lienzo digital de alta calidad estilizado como: ${tipoVisualizacion}. Que capture la esencia del profesional llamado '${objetivo}'. `;
+            if (tonoGeneral === "Positivo y Alentador") {
+                promptVisual += "El personaje debe reflejar liderazgo moderno, aura brillante de color dorado y azul, entorno corporativo colaborativo de alta tecnología, transmitiendo confianza y empatía.";
+            } else if (tonoGeneral === "Crítico o Riguroso") {
+                promptVisual += "El entorno debe representarse con tonos fríos, geometría abstracta y estilo analítico de resolución de problemas complejos.";
+            } else {
+                promptVisual += "Debe mostrar un balance perfecto, un ambiente de oficina limpio, minimalista y simétrico, denotando estabilidad y análisis de datos.";
+            }
+            promptVisual += ` Basado en un equipo que emitió ${conteoPositivos} votos de alta confianza. Estilo cinematográfico, render 3D detallado.`;
+
+            document.getElementById('promptPreview').innerText = promptVisual;
+            document.getElementById('promptPreviewContainer').style.display = 'block';
+
+            const imageWrapper = document.getElementById('imageWrapper');
+
+            // Llamada selectiva a API de OpenAI si se proporciona Key
+            if (apiKey) {
+                imageWrapper.innerHTML = `
+                    <div class="image-placeholder">
+                        <h3>🎨 Pintando Arquetipo...</h3>
+                        <p>Invocando los servidores generativos de OpenAI (DALL-E 3). Esto tomará unos segundos.</p>
+                    </div>`;
+                
+                try {
+                    const response = await fetch('https://api.openai.com/v1/images/generations', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${apiKey}`
+                        },
+                        body: JSON.stringify({
+                            model: "dall-e-3",
+                            prompt: promptVisual,
+                            n: 1,
+                            size: "1024x1024"
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (data.error) {
+                        throw new Error(data.error.message);
+                    }
+
+                    const urlImagen = data.data[0].url;
+                    imageWrapper.innerHTML = `<img src="${urlImagen}" class="generated-image" alt="Arquetipo Visual de ${objetivo}">`;
+                    showNotification('🎨 ¡Imagen generada e insertada con éxito!');
+
+                } catch (err) {
+                    showNotification('❌ Error con OpenAI: ' + err.message, 'error');
+                    imageWrapper.innerHTML = `
+                        <div class="image-placeholder" style="border-color: #e74c3c;">
+                            <h3 style="color: #e74c3c;">Error en Generación Visual</h3>
+                            <p>${err.message}</p>
+                        </div>`;
+                }
+            } else {
+                showNotification('ℹ️ Reporte analítico completado. No pusiste una API Key, se omitió DALL-E 3.', 'info');
+                imageWrapper.innerHTML = `
+                    <div class="image-placeholder">
+                        <h3>Falta la API Key de OpenAI</h3>
+                        <p>El análisis estadístico y semántico se completó con éxito, pero se necesita una clave válida para proyectar el lienzo gráfico.</p>
+                    </div>`;
+            }
+
+            // Mostrar Sección Final con animación suave
+            const resSec = document.getElementById('resultsSection');
+            resSec.style.display = 'block';
+            resSec.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
