@@ -1,0 +1,550 @@
+# Crear un Sistema de Reconocimiento en Equipo para Teams
+
+Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página web que puedes compartir como link en tu reunión de Teams, donde los miembros del equipo votan y comentan por qué reconocen a alguien.
+
+## Opción 1: Solución con HTML (Archivo único que puedes hostear gratis)
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Team Recognition - Best Helper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #f39c12, #e74c3c, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #bdc3c7;
+            font-size: 1.1em;
+        }
+
+        /* Sección de votación */
+        .voting-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .voting-section h2 {
+            color: #f39c12;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ecf0f1;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #f39c12;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .form-group select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
+        }
+
+        /* Resultados */
+        .results-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .results-section h2 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #f39c12;
+            transition: all 0.3s;
+        }
+
+        .result-card:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .result-card.winner {
+            border-left: 4px solid #2ecc71;
+            background: rgba(46, 204, 113, 0.1);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); }
+            to { box-shadow: 0 0 20px rgba(46, 204, 113, 0.4); }
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .result-name {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .result-votes {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .vote-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .vote-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f39c12, #2ecc71);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .reasons-list {
+            margin-top: 10px;
+        }
+
+        .reason-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #bdc3c7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reason-item::before {
+            content: '💬';
+        }
+
+        .reason-count {
+            background: rgba(243, 156, 18, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            color: #f39c12;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .voter-name {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.85em;
+        }
+
+        /* Configuración del equipo */
+        .setup-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .setup-section h2 {
+            color: #9b59b6;
+            margin-bottom: 20px;
+        }
+
+        .team-members-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .member-tag {
+            background: rgba(155, 89, 182, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .member-tag .remove-btn {
+            cursor: pointer;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .add-member-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-member-row input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .btn-add {
+            background: #9b59b6;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-add:hover {
+            background: #8e44ad;
+        }
+
+        .btn-reset {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-toggle.active {
+            background: #f39c12;
+            border-color: #f39c12;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            transform: translateX(400px);
+            transition: transform 0.5s;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .trophy {
+            font-size: 2em;
+            margin-right: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #bdc3c7;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .add-member-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Team Recognition Poll</h1>
+            <p>¡Vota por el mejor helper de tu equipo y comparte por qué!</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="btn-toggle active" onclick="showSection('vote')">🗳️ Votar</button>
+            <button class="btn-toggle" onclick="showSection('results')">📊 Resultados</button>
+            <button class="btn-toggle" onclick="showSection('setup')">⚙️ Configurar Equipo</button>
+        </div>
+
+        <!-- Sección de Configuración -->
+        <div id="setup-section" class="setup-section" style="display:none;">
+            <h2>⚙️ Configurar Miembros del Equipo</h2>
+            <div class="add-member-row">
+                <input type="text" id="new-member-name" placeholder="Nombre del miembro..." onkeypress="if(event.key==='Enter')addMember()">
+                <button class="btn-add" onclick="addMember()">+ Agregar</button>
+            </div>
+            <div class="team-members-list" id="team-members-list"></div>
+            <br>
+            <button class="btn-reset" onclick="resetPoll()">🔄 Reiniciar Votación</button>
+            <button class="btn-reset" style="background: linear-gradient(45deg, #3498db, #2980b9);" onclick="exportResults()">📋 Exportar Resultados</button>
+        </div>
+
+        <!-- Sección de Votación -->
+        <div id="vote-section" class="voting-section">
+            <h2>🗳️ ¡Reconoce a tu compañero!</h2>
+            <div class="form-group">
+                <label>👤 Tu nombre:</label>
+                <input type="text" id="voter-name" placeholder="¿Quién eres?">
+            </div>
+            <div class="form-group">
+                <label>🌟 ¿A quién reconoces como Best Helper?</label>
+                <select id="nominee-select">
+                    <option value="">-- Selecciona un compañero --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>💬 ¿Por qué lo reconoces? (motivo)</label>
+                <textarea id="reason-text" placeholder="Ej: Siempre me ayuda con dudas técnicas, tiene paciencia para explicar..."></textarea>
+            </div>
+            <button class="btn-submit" onclick="submitVote()">🎉 Enviar Reconocimiento</button>
+        </div>
+
+        <!-- Sección de Resultados -->
+        <div id="results-section" class="results-section" style="display:none;">
+            <h2>📊 Resultados en Vivo</h2>
+            <div class="stats-grid" id="stats-grid"></div>
+            <div id="results-container"></div>
+        </div>
+    </div>
+
+    <!-- Notificación -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // ============ ALMACENAMIENTO (localStorage para demo) ============
+        // Para producción, reemplazar con Firebase, Supabase, etc.
+
+        function getData() {
+            const data = localStorage.getItem('teamRecognitionData');
+            return data ? JSON.parse(data) : { members: [], votes: [] };
+        }
+
+        function saveData(data) {
+            localStorage.setItem('teamRecognitionData', JSON.stringify(data));
+        }
+
+        // ============ MIEMBROS DEL EQUIPO ============
+
+        function addMember() {
+            const input = document.getElementById('new-member-name');
+            const name = input.value.trim();
+            if (!name) return;
+
+            const data = getData();
+            if (data.members.includes(name)) {
+                showNotification('⚠️ Este miembro ya existe', '#e74c3c');
+                return;
+            }
+
+            data.members.push(name);
+            saveData(data);
+            input.value = '';
+            renderMembers();
+            updateNomineeSelect();
+            showNotification('✅ Miembro agregado: ' + name, '#2ecc71');
+        }
+
+        function removeMember(name) {
+            const data = getData();
+            data.members = data.members.filter(m => m !== name);
+            saveData(data);
+            renderMembers();
+            updateNomineeSelect();
+        }
+
+        function renderMembers() {
+            const data = getData();
+            const container = document.getElementById('team-members-list');
+            container.innerHTML = data.members.map(m => `
+                <div class="member-tag">
+                    <span>👤 ${m}</span>
+                    <span class="remove-btn" onclick="removeMember('${m}')">✕</span>
+                </div>
+            `).join('');
+        }
+
+        function updateNomineeSelect() {
+            const data = getData();
+            const select = document.getElementById('nominee-select');
+            select.innerHTML = '<option value="">-- Selecciona un compañero --</option>' +
+                data.members.map(m => `<option value="${m}">${m}</option>`).join('');
+        }
+
+        // ============ VOTACIÓN ============
+
+        function submitVote() {
+            const voterName = document.getElementById('voter-name').value.trim();
+            const nominee = document.getElementById('nominee-select').value;
+            const reason = document.getElementById('reason-text').value.trim();
+
+            if (!voterName) {
+                showNotification('⚠️ Por favor ingresa tu nombre', '#e74c3c');
+                return;
+            }
+            if (!nominee) {
+                showNotification('⚠️ Selecciona a quién reconoces', '#e74c3c');
+                return;
+            }
+            if (!reason) {
+                showNotification('⚠️ Escribe un motivo', '#e74c3c');
+                return;
+            }
+            if (voterName
