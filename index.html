@@ -1,8 +1,7 @@
-# Crear un Sistema de Reconocimiento en Equipo para Teams
 
-Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página web que puedes compartir como link en tu reunión de Teams, donde los miembros del equipo votan y comentan por qué reconocen a alguien.
+# 🏆 Team Recognition - Código Completo y Funcional
 
-## Opción 1: Solución con HTML (Archivo único que puedes hostear gratis)
+Aquí tienes el código completo corregido y mejorado:
 
 ```html
 <!DOCTYPE html>
@@ -20,14 +19,14 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
             color: #fff;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
         }
 
@@ -38,7 +37,7 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
 
         .header h1 {
             font-size: 2.5em;
-            background: linear-gradient(45deg, #f39c12, #e74c3c, #9b59b6);
+            background: linear-gradient(45deg, #f1c40f, #e67e22, #e74c3c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -50,9 +49,55 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
             font-size: 1.1em;
         }
 
-        /* Sección de votación */
-        .voting-section {
-            background: rgba(255, 255, 255, 0.05);
+        /* TABS */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            border-color: transparent;
+            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.4);
+        }
+
+        /* SECCIONES */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 20px;
             padding: 30px;
             margin: 20px 0;
@@ -60,12 +105,12 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
             backdrop-filter: blur(10px);
         }
 
-        .voting-section h2 {
-            color: #f39c12;
-            margin-bottom: 20px;
+        .card h2 {
+            margin-bottom: 25px;
             font-size: 1.5em;
         }
 
+        /* FORMULARIOS */
         .form-group {
             margin-bottom: 20px;
         }
@@ -75,15 +120,16 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
             margin-bottom: 8px;
             color: #ecf0f1;
             font-weight: 600;
+            font-size: 0.95em;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.08);
             color: #fff;
             font-size: 1em;
@@ -95,7 +141,8 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
         .form-group textarea:focus {
             outline: none;
             border-color: #f39c12;
-            box-shadow: 0 0 15px rgba(243, 156, 18, 0.3);
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.2);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .form-group select option {
@@ -104,11 +151,12 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
         }
 
         .form-group textarea {
-            min-height: 80px;
+            min-height: 70px;
             resize: vertical;
         }
 
-        .btn-submit {
+        /* BOTONES */
+        .btn-primary {
             background: linear-gradient(45deg, #f39c12, #e74c3c);
             color: #fff;
             border: none;
@@ -122,429 +170,407 @@ Sí, puedo ayudarte a crear esto. Te propongo una solución usando una página w
             width: 100%;
         }
 
-        .btn-submit:hover {
-            transform: translateY(-2px);
+        .btn-primary:hover {
+            transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
         }
 
-        /* Resultados */
-        .results-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .results-section h2 {
-            color: #2ecc71;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        .result-card {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #f39c12;
+        .btn-secondary {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95em;
             transition: all 0.3s;
         }
 
-        .result-card:hover {
-            transform: translateX(5px);
-            background: rgba(255, 255, 255, 0.12);
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
         }
 
-        .result-card.winner {
-            border-left: 4px solid #2ecc71;
-            background: rgba(46, 204, 113, 0.1);
-            animation: glow 2s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); }
-            to { box-shadow: 0 0 20px rgba(46, 204, 113, 0.4); }
-        }
-
-        .result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .result-name {
-            font-size: 1.3em;
-            font-weight: 700;
-        }
-
-        .result-votes {
-            background: linear-gradient(45deg, #f39c12, #e74c3c);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 700;
-        }
-
-        .vote-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-
-        .vote-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f39c12, #2ecc71);
-            border-radius: 4px;
-            transition: width 1s ease;
-        }
-
-        .reasons-list {
-            margin-top: 10px;
-        }
-
-        .reason-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin: 5px 0;
-            font-size: 0.9em;
-            color: #bdc3c7;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .reason-item::before {
-            content: '💬';
-        }
-
-        .reason-count {
-            background: rgba(243, 156, 18, 0.2);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.8em;
-            color: #f39c12;
-            margin-left: auto;
-            white-space: nowrap;
-        }
-
-        .voter-name {
-            font-style: italic;
-            color: #7f8c8d;
-            font-size: 0.85em;
-        }
-
-        /* Configuración del equipo */
-        .setup-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .setup-section h2 {
-            color: #9b59b6;
-            margin-bottom: 20px;
-        }
-
-        .team-members-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        .member-tag {
-            background: rgba(155, 89, 182, 0.2);
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .member-tag .remove-btn {
+        .btn-danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
             cursor: pointer;
-            color: #e74c3c;
-            font-weight: bold;
+            font-weight: 600;
+            transition: all 0.3s;
         }
 
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        /* SETUP - MIEMBROS */
         .add-member-row {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .add-member-row input {
             flex: 1;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.08);
             color: #fff;
             font-size: 1em;
         }
 
-        .btn-add {
-            background: #9b59b6;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
+        .add-member-row input:focus {
+            outline: none;
+            border-color: #9b59b6;
+            box-shadow: 0 0 15px rgba(155, 89, 182, 0.3);
+        }
+
+        .members-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .member-chip {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(142, 68, 173, 0.2));
+            border: 1px solid rgba(155, 89, 182, 0.5);
+            padding: 10px 18px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
             transition: all 0.3s;
         }
 
-        .btn-add:hover {
-            background: #8e44ad;
+        .member-chip:hover {
+            background: rgba(155, 89, 182, 0.4);
+            transform: scale(1.05);
         }
 
-        .btn-reset {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
+        .member-chip .remove {
             cursor: pointer;
-            font-weight: 600;
-            margin-top: 20px;
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.2em;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(231, 76, 60, 0.2);
             transition: all 0.3s;
         }
 
-        .btn-reset:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        .member-chip .remove:hover {
+            background: rgba(231, 76, 60, 0.5);
         }
 
-        .btn-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            margin: 5px;
+        /* RECOGNITION SLOTS */
+        .recognition-slot {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
             transition: all 0.3s;
         }
 
-        .btn-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .recognition-slot:hover {
+            border-color: rgba(243, 156, 18, 0.3);
         }
 
-        .btn-toggle.active {
-            background: #f39c12;
-            border-color: #f39c12;
+        .slot-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
-        .tabs {
+        .slot-number {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .slot-title {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        /* RESULTADOS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-box .number {
+            font-size: 2.8em;
+            font-weight: 800;
+            background: linear-gradient(45deg, #f1c40f, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-box .label {
+            color: #95a5a6;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        /* PODIUM */
+        .podium {
             display: flex;
             justify-content: center;
-            margin: 20px 0;
-            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 15px;
+            margin: 30px 0;
+            min-height: 280px;
         }
 
+        .podium-place {
+            text-align: center;
+            border-radius: 16px;
+            padding: 20px 15px;
+            min-width: 140px;
+            transition: all 0.3s;
+        }
+
+        .podium-place:hover {
+            transform: translateY(-5px);
+        }
+
+        .podium-1 {
+            background: linear-gradient(180deg, rgba(241, 196, 15, 0.3), rgba(241, 196, 15, 0.1));
+            border: 2px solid rgba(241, 196, 15, 0.5);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .podium-2 {
+            background: linear-gradient(180deg, rgba(189, 195, 199, 0.3), rgba(189, 195, 199, 0.1));
+            border: 2px solid rgba(189, 195, 199, 0.5);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .podium-3 {
+            background: linear-gradient(180deg, rgba(205, 127, 50, 0.3), rgba(205, 127, 50, 0.1));
+            border: 2px solid rgba(205, 127, 50, 0.5);
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .podium-medal {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .podium-name {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .podium-votes {
+            font-size: 0.9em;
+            color: #bdc3c7;
+        }
+
+        /* DETAIL CARDS */
+        .result-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #f39c12;
+            transition: all 0.3s;
+        }
+
+        .result-card:nth-child(1) { border-left-color: #f1c40f; }
+        .result-card:nth-child(2) { border-left-color: #bdc3c7; }
+        .result-card:nth-child(3) { border-left-color: #cd7f32; }
+
+        .result-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .result-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .result-card-name {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+
+        .result-card-badge {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #f39c12, #2ecc71);
+            transition: width 1.5s ease;
+        }
+
+        .comments-section {
+            margin-top: 15px;
+        }
+
+        .comment-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 8px 0;
+            border-left: 3px solid rgba(243, 156, 18, 0.5);
+        }
+
+        .comment-text {
+            color: #ecf0f1;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .comment-author {
+            color: #7f8c8d;
+            font-size: 0.8em;
+            font-style: italic;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+
+        .no-results .icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        /* NOTIFICATION */
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #2ecc71;
-            color: #fff;
-            padding: 15px 25px;
-            border-radius: 10px;
+            padding: 16px 28px;
+            border-radius: 12px;
             font-weight: 600;
-            transform: translateX(400px);
-            transition: transform 0.5s;
-            z-index: 1000;
+            z-index: 9999;
+            transform: translateX(500px);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .notification.show {
             transform: translateX(0);
         }
 
-        .trophy {
-            font-size: 2em;
-            margin-right: 10px;
+        .notification.success {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+        .notification.error {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
         }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
+        .notification.info {
+            background: linear-gradient(45deg, #3498db, #2980b9);
         }
 
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: 700;
-            background: linear-gradient(45deg, #f39c12, #e74c3c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* CONFETTI */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            overflow: hidden;
         }
 
-        .stat-label {
-            color: #bdc3c7;
-            margin-top: 5px;
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall 3s linear forwards;
         }
 
+        @keyframes confettiFall {
+            to {
+                top: 100vh;
+                transform: rotate(720deg);
+            }
+        }
+
+        /* RESPONSIVE */
         @media (max-width: 600px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            .add-member-row {
-                flex-direction: column;
-            }
+            .header h1 { font-size: 1.8em; }
+            .add-member-row { flex-direction: column; }
+            .podium { flex-direction: column; align-items: center; }
+            .podium-place { min-width: 90%; min-height: auto !important; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
         }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(243,156,18,0.5); border-radius: 4px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏆 Team Recognition Poll</h1>
-            <p>¡Vota por el mejor helper de tu equipo y comparte por qué!</p>
-        </div>
-
-        <!-- Tabs -->
-        <div class="tabs">
-            <button class="btn-toggle active" onclick="showSection('vote')">🗳️ Votar</button>
-            <button class="btn-toggle" onclick="showSection('results')">📊 Resultados</button>
-            <button class="btn-toggle" onclick="showSection('setup')">⚙️ Configurar Equipo</button>
-        </div>
-
-        <!-- Sección de Configuración -->
-        <div id="setup-section" class="setup-section" style="display:none;">
-            <h2>⚙️ Configurar Miembros del Equipo</h2>
-            <div class="add-member-row">
-                <input type="text" id="new-member-name" placeholder="Nombre del miembro..." onkeypress="if(event.key==='Enter')addMember()">
-                <button class="btn-add" onclick="addMember()">+ Agregar</button>
-            </div>
-            <div class="team-members-list" id="team-members-list"></div>
-            <br>
-            <button class="btn-reset" onclick="resetPoll()">🔄 Reiniciar Votación</button>
-            <button class="btn-reset" style="background: linear-gradient(45deg, #3498db, #2980b9);" onclick="exportResults()">📋 Exportar Resultados</button>
-        </div>
-
-        <!-- Sección de Votación -->
-        <div id="vote-section" class="voting-section">
-            <h2>🗳️ ¡Reconoce a tu compañero!</h2>
-            <div class="form-group">
-                <label>👤 Tu nombre:</label>
-                <input type="text" id="voter-name" placeholder="¿Quién eres?">
-            </div>
-            <div class="form-group">
-                <label>🌟 ¿A quién reconoces como Best Helper?</label>
-                <select id="nominee-select">
-                    <option value="">-- Selecciona un compañero --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>💬 ¿Por qué lo reconoces? (motivo)</label>
-                <textarea id="reason-text" placeholder="Ej: Siempre me ayuda con dudas técnicas, tiene paciencia para explicar..."></textarea>
-            </div>
-            <button class="btn-submit" onclick="submitVote()">🎉 Enviar Reconocimiento</button>
-        </div>
-
-        <!-- Sección de Resultados -->
-        <div id="results-section" class="results-section" style="display:none;">
-            <h2>📊 Resultados en Vivo</h2>
-            <div class="stats-grid" id="stats-grid"></div>
-            <div id="results-container"></div>
-        </div>
-    </div>
-
-    <!-- Notificación -->
-    <div class="notification" id="notification"></div>
-
-    <script>
-        // ============ ALMACENAMIENTO (localStorage para demo) ============
-        // Para producción, reemplazar con Firebase, Supabase, etc.
-
-        function getData() {
-            const data = localStorage.getItem('teamRecognitionData');
-            return data ? JSON.parse(data) : { members: [], votes: [] };
-        }
-
-        function saveData(data) {
-            localStorage.setItem('teamRecognitionData', JSON.stringify(data));
-        }
-
-        // ============ MIEMBROS DEL EQUIPO ============
-
-        function addMember() {
-            const input = document.getElementById('new-member-name');
-            const name = input.value.trim();
-            if (!name) return;
-
-            const data = getData();
-            if (data.members.includes(name)) {
-                showNotification('⚠️ Este miembro ya existe', '#e74c3c');
-                return;
-            }
-
-            data.members.push(name);
-            saveData(data);
-            input.value = '';
-            renderMembers();
-            updateNomineeSelect();
-            showNotification('✅ Miembro agregado: ' + name, '#2ecc71');
-        }
-
-        function removeMember(name) {
-            const data = getData();
-            data.members = data.members.filter(m => m !== name);
-            saveData(data);
-            renderMembers();
-            updateNomineeSelect();
-        }
-
-        function renderMembers() {
-            const data = getData();
-            const container = document.getElementById('team-members-list');
-            container.innerHTML = data.members.map(m => `
-                <div class="member-tag">
-                    <span>👤 ${m}</span>
-                    <span class="remove-btn" onclick="removeMember('${m}')">✕</span>
-                </div>
-            `).join('');
-        }
-
-        function updateNomineeSelect() {
-            const data = getData();
-            const select = document.getElementById('nominee-select');
-            select.innerHTML = '<option value="">-- Selecciona un compañero --</option>' +
-                data.members.map(m => `<option value="${m}">${m}</option>`).join('');
-        }
-
-        // ============ VOTACIÓN ============
-
-        function submitVote() {
-            const voterName = document.getElementById('voter-name').value.trim();
-            const nominee = document.getElementById('nominee-select').value;
-            const reason = document.getElementById('reason-text').value.trim();
-
-            if (!voterName) {
-                showNotification('⚠️ Por favor ingresa tu nombre', '#e74c3c');
-                return;
-            }
-            if (!nominee) {
-                showNotification('⚠️ Selecciona a quién reconoces', '#e74c3c');
-                return;
-            }
-            if (!reason) {
-                showNotification('⚠️ Escribe un motivo', '#e74c3c');
-                return;
-            }
-            if (voterName
+            <h1>🏆 Best Helper Recognition</h1>
+            <p>Reconoce hasta 3 compañeros que te han ayudado. ¡Celebremos al
